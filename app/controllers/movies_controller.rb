@@ -11,10 +11,12 @@ class MoviesController < ApplicationController
   end
 
   def index
+    redirect = 0
     if params[:ratings]
       @ratings = params[:ratings]
       session[:ratings] = params[:ratings]
     elsif session[:ratings]
+      redirect = 1
       @ratings = session[:ratings]
     else
       @ratings = nil
@@ -27,10 +29,24 @@ class MoviesController < ApplicationController
       end
     end
 
-    if params[:sort] and @ratings
-      @movies = Movie.where(:rating => @ratings.keys).order(params[:sort])
-    elsif params[:sort]
-      @movies = Movie.order(params[:sort])
+    if params[:sort]
+      @sort = params[:sort]
+      session[:sort] = params[:sort]
+    elsif session[:sort]
+      redirect = 1
+      @sort = session[:sort]
+    else
+      @sort = nil
+    end
+
+    if redirect==1
+      redirect_to movies_path(:sort=>@sort, :ratings=>@ratings)
+    end
+
+    if @sort and @ratings
+      @movies = Movie.where(:rating => @ratings.keys).order(@sort)
+    elsif @sort
+      @movies = Movie.order(@sort)
     elsif @ratings
       @movies = Movie.where(:rating => @ratings.keys)
     else

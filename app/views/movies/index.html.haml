@@ -11,9 +11,9 @@
 %table#movies
   %thead
     %tr
-      %th{class:("hilite" if params[:sort].to_s == "title"),:id => "title_header"}= link_to "Movie Title", :sort => "title", :ratings=>@ratings
+      %th{class:("hilite" if @sort == "title"),:id => "title_header"}= link_to "Movie Title", :sort => "title", :ratings=>@ratings
       %th Rating
-      %th{class:("hilite" if params[:sort].to_s == "release_date"),:id => "release_date_header"}= link_to "Release Date", :sort => "release_date", :ratings=>@ratings
+      %th{class:("hilite" if @sort == "release_date"),:id => "release_date_header"}= link_to "Release Date", :sort => "release_date", :ratings=>@ratings
       %th More Info
   %tbody
     - @movies.each do |movie|
