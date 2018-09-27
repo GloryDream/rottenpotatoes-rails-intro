@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
   def index
     if params[:ratings]
       @ratings = params[:ratings]
-      session[:ratings] = @ratings
+      session[:ratings] = params[:ratings]
     elsif session[:ratings]
       @ratings = session[:ratings]
     else
